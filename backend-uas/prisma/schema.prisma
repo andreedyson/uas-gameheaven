@@ -1,0 +1,69 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model brands {
+  id_brand String     @id @db.Char(4)
+  name     String     @db.VarChar(50)
+  products products[]
+}
+
+model categories {
+  id_category Int        @id @default(autoincrement())
+  name        String     @db.VarChar(50)
+  products    products[]
+}
+
+model products {
+  id_product   Int            @id @default(autoincrement())
+  name         String         @db.VarChar(100)
+  category     Int
+  brand        String         @db.Char(4)
+  price        Float
+  description  String         @db.Text
+  image        String         @db.TinyText
+  stocks       Int
+  categories   categories     @relation(fields: [category], references: [id_category], onUpdate: Restrict, map: "products_ibfk_1")
+  brands       brands         @relation(fields: [brand], references: [id_brand], onUpdate: Restrict, map: "products_ibfk_2")
+  transactions transactions[]
+
+  @@index([brand], map: "brand")
+  @@index([category], map: "category")
+}
+
+model users {
+  username     String         @id @db.VarChar(32)
+  full_name    String         @db.VarChar(100)
+  email        String         @db.VarChar(100)
+  phone        String         @db.VarChar(15)
+  password     String         @db.VarChar(100)
+  role         Int            @default(2) @db.TinyInt
+  transactions transactions[]
+}
+
+model transactions {
+  id_transactions Int                 @id @default(autoincrement())
+  username        String              @db.VarChar(32)
+  id_product      Int
+  quantity        Int
+  total_price     Int
+  date            DateTime            @db.Date
+  status          transactions_status
+  users           users               @relation(fields: [username], references: [username], onUpdate: Restrict, map: "transactions_ibfk_1")
+  products        products            @relation(fields: [id_product], references: [id_product], onUpdate: Restrict, map: "transactions_ibfk_2")
+
+  @@index([id_product], map: "id_product")
+  @@index([username], map: "username")
+}
+
+enum transactions_status {
+  Pending
+  Processing
+  Completed
+  Cancelled
+}
