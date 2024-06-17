@@ -54,6 +54,11 @@ const routes = [
         name: "dataBrandsAdmin",
         component: () => import("pages/admin/brands/Index.vue"),
       },
+      {
+        path: "categories",
+        name: "dataCategoriesAdmin",
+        component: () => import("pages/admin/categories/Index.vue"),
+      },
     ],
   },
 

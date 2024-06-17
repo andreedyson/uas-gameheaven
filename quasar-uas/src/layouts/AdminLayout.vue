@@ -123,7 +123,7 @@
           clickable
           :to="{ name: 'dataBrandsAdmin' }"
           class="font-medium"
-          :exact-active-class="`${
+          exact-active-class="`${
             Dark.isActive ? 'text-secondary' : 'text-primary'
           }`"
         >
@@ -134,7 +134,11 @@
             <q-item-label>Brands</q-item-label>
           </q-item-section>
         </q-item>
-        <q-item clickable :to="{ name: 'dataUsersAdmin' }" class="font-medium">
+        <q-item
+          clickable
+          :to="{ name: 'dataCategoriesAdmin' }"
+          class="font-medium"
+        >
           <q-item-section avatar>
             <q-icon name="category" />
           </q-item-section>
@@ -142,11 +146,7 @@
             <q-item-label>Categories</q-item-label>
           </q-item-section>
         </q-item>
-        <q-item
-          clickable
-          :to="{ name: 'dataCategoriesAdmin' }"
-          class="font-medium"
-        >
+        <q-item clickable :to="{ name: 'dataUsersAdmin' }" class="font-medium">
           <q-item-section avatar>
             <q-icon name="person" />
           </q-item-section>

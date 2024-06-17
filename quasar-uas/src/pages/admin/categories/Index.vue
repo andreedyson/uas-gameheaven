@@ -3,7 +3,7 @@
     <section>
       <div>
         <div class="mb-3">
-          <h2 class="text-xl font-bold">All Brands Data</h2>
+          <h2 class="text-xl font-bold">All Categories Data</h2>
         </div>
         <q-card
           flat
@@ -21,9 +21,9 @@
           >
             <template v-slot:body="props">
               <q-tr :props="props">
-                <q-td key="id_brand" :props="props">
+                <q-td key="id_category" :props="props">
                   <q-badge color="green-10">
-                    {{ props.row.id_brand }}
+                    {{ props.row.id_category }}
                   </q-badge>
                 </q-td>
                 <q-td key="name" :props="props">
@@ -39,7 +39,7 @@
                       no-caps
                     />
                     <q-btn
-                      @click="deleteBrand(props.row.id_brand)"
+                      @click="deleteCategory(props.row.id_category)"
                       color="red-7"
                       unelevated
                       icon="delete"
@@ -50,13 +50,13 @@
               </q-tr>
             </template>
             <template v-slot:top-left>
-              <h2 class="text-xl font-semibold">Brands Table</h2>
+              <h2 class="text-xl font-semibold">Categories Table</h2>
             </template>
 
             <template v-slot:top-right>
               <q-btn
                 @click="openDialog(false)"
-                label="Add Brand"
+                label="Add Category"
                 color="primary"
                 icon="add"
                 no-caps
@@ -67,30 +67,22 @@
           <q-dialog v-model="formDialog" position="right" full-height maximized>
             <q-card style="width: 400px; max-width: 70vw" class="p-2">
               <q-card-section>
-                <div class="text-h6">{{ editMode ? "Edit" : "Add" }} Brand</div>
+                <div class="text-h6">
+                  {{ editMode ? "Edit" : "Add" }} Category
+                </div>
                 <div>
                   {{ editMode ? "Edit" : "Generate" }} a
-                  {{ editMode ? "" : "new" }} Brand.
+                  {{ editMode ? "" : "new" }} Category.
                 </div>
               </q-card-section>
 
               <q-card-section class="q-pt-none">
                 <q-form @submit="onSubmit" ref="formInput">
                   <q-input
-                    v-model="form.id_brand"
-                    label="brand ID"
+                    v-model="name"
+                    label="category Name"
                     :rules="[
-                      (val) => val !== '' || 'Brand ID can not be empty',
-                      (val) =>
-                        val.length <= 4 ||
-                        'Brand ID can not be more tha 4 characters',
-                    ]"
-                  />
-                  <q-input
-                    v-model="form.name"
-                    label="Brand Name"
-                    :rules="[
-                      (val) => val !== '' || 'Brand name can not be empty',
+                      (val) => val !== '' || 'category name can not be empty',
                     ]"
                   />
                 </q-form>
@@ -119,7 +111,7 @@
   </q-page>
 </template>
 
-<script setup lang="js">
+<script setup>
 import { Dark, Notify, colors, useQuasar } from "quasar";
 import { api } from "src/boot/axios";
 import { formatPrice } from "src/helper/utils";
@@ -127,13 +119,14 @@ import { onMounted, ref } from "vue";
 
 const q = useQuasar();
 const editMode = ref(false);
+const idCategory = ref(0);
 
 const columns = [
   {
-    name: "id_brand",
+    name: "id_category",
     align: "left",
-    label: "Brand ID",
-    field: "id_brand",
+    label: "category ID",
+    field: "id_category",
     sortable: true,
   },
   {
@@ -153,27 +146,24 @@ const columns = [
 
 const formInput = ref();
 const formDialog = ref(false);
-const form = ref({
-  id_brand: "",
-  name: "",
-});
+const name = ref("");
 
 const rows = ref([]);
 
 onMounted(() => {
-  getBrandsData();
+  getcategoriesData();
 });
 
-const getBrandsData = async () => {
+const getcategoriesData = async () => {
   try {
-    const res = await api.get("/brand/get");
+    const res = await api.get("/category/get");
 
     if (res.data.status) {
       rows.value = res.data.results;
     }
   } catch (error) {
     Notify.create({
-      message: "Error getting brands data",
+      message: "Error getting categories data",
       color: "negative",
     });
   }
@@ -183,25 +173,23 @@ const openDialog = (isEdit = false, data = null) => {
   resetForm();
   if (isEdit) {
     editMode.value = true;
-    form.value.id_brand = data.id_brand;
-    form.value.name = data.name;
+    name.value = data.name;
+    idCategory.value = data.id_category;
   }
   formDialog.value = true;
 };
 
 const resetForm = () => {
-  form.value = {
-    id_brand: "",
-    name: "",
-  };
+  name.value = "";
   editMode.value = false;
+  idCategory.value = 0;
 };
 
 const onSubmit = async () => {
   try {
     if (!editMode.value) {
-      const res = await api.post("/brand/insert", {
-        ...form.value,
+      const res = await api.post("/category/insert", {
+        name: name.value,
       });
 
       if (res.data.status) {
@@ -220,9 +208,8 @@ const onSubmit = async () => {
         });
       }
     } else {
-      const res = await api.put("/brand/edit", {
-        id_brand: form.value.id_brand,
-        name: form.value.name,
+      const res = await api.put(`/category/edit/${idCategory.value}`, {
+        name: name.value,
       });
 
       if (res.data.status) {
@@ -233,7 +220,7 @@ const onSubmit = async () => {
 
         formDialog.value = false;
         resetForm();
-        getBrandsData();
+        getcategoriesData();
       } else {
         Notify.create({
           message: res.data.msg,
@@ -249,23 +236,21 @@ const onSubmit = async () => {
   }
 };
 
-const deleteBrand = (id) => {
+const deleteCategory = (id) => {
   q.dialog({
     title: "Confirm",
-    message: "Are you sure you want to delete this brand?",
+    message: "Are you sure you want to delete this category?",
     cancel: true,
     persistent: true,
   }).onOk(async () => {
     try {
-      const res = await api.delete("/brand/delete", {
-        data: { id_brand: id },
-      });
+      const res = await api.delete(`/category/delete/${id}`);
       if (res.data.status) {
         Notify.create({
           message: res.data.msg,
           color: "positive",
         });
-        getBrandsData();
+        getcategoriesData();
       } else {
         Notify.create({
           message: res.data.msg,
