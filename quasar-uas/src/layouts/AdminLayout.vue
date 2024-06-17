@@ -87,11 +87,7 @@
           GameHeaven
         </q-item-label>
 
-        <q-item
-          clickable
-          :to="{ name: 'dashboardAdmin' }"
-          v-bind:class="`${Dark.isActive ? 'text-secondary' : 'text-primary'}`"
-        >
+        <q-item clickable :to="{ name: 'dashboardAdmin' }" class="font-medium">
           <q-item-section avatar>
             <q-icon name="grid_view" />
           </q-item-section>
@@ -101,14 +97,61 @@
         </q-item>
         <q-item
           clickable
-          :to="{ name: 'dashboardAdmin' }"
-          v-bind:class="`${Dark.isActive ? 'text-secondary' : 'text-primary'}`"
+          :to="{ name: 'dataTransactionsAdmin' }"
+          class="font-medium"
+        >
+          <q-item-section avatar>
+            <q-icon name="receipt_long" />
+          </q-item-section>
+          <q-item-section>
+            <q-item-label>Transactions</q-item-label>
+          </q-item-section>
+        </q-item>
+        <q-item
+          clickable
+          :to="{ name: 'dataProductsAdmin' }"
+          class="font-medium"
         >
           <q-item-section avatar>
             <q-icon name="conveyor_belt" />
           </q-item-section>
           <q-item-section>
             <q-item-label>Products</q-item-label>
+          </q-item-section>
+        </q-item>
+        <q-item
+          clickable
+          :to="{ name: 'dataBrandsAdmin' }"
+          class="font-medium"
+          :exact-active-class="`${
+            Dark.isActive ? 'text-secondary' : 'text-primary'
+          }`"
+        >
+          <q-item-section avatar>
+            <q-icon name="branding_watermark" />
+          </q-item-section>
+          <q-item-section>
+            <q-item-label>Brands</q-item-label>
+          </q-item-section>
+        </q-item>
+        <q-item clickable :to="{ name: 'dataUsersAdmin' }" class="font-medium">
+          <q-item-section avatar>
+            <q-icon name="category" />
+          </q-item-section>
+          <q-item-section>
+            <q-item-label>Categories</q-item-label>
+          </q-item-section>
+        </q-item>
+        <q-item
+          clickable
+          :to="{ name: 'dataCategoriesAdmin' }"
+          class="font-medium"
+        >
+          <q-item-section avatar>
+            <q-icon name="person" />
+          </q-item-section>
+          <q-item-section>
+            <q-item-label>Users</q-item-label>
           </q-item-section>
         </q-item>
       </q-list>

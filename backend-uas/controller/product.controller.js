@@ -4,7 +4,10 @@ const { deleteImage } = require("../uploadconfig");
 
 exports.insert = async (req, res) => {
   try {
+    console.log(req.body);
     const { name, category, brand, price, description, stocks } = req.body;
+
+    console.log(req.body);
 
     await prisma.products.create({
       data: {
@@ -23,6 +26,7 @@ exports.insert = async (req, res) => {
       msg: "Product added successfully",
     });
   } catch (error) {
+    console.log(error);
     return res.json({
       status: false,
       msg: "Something went wrong creating Product",
@@ -105,12 +109,12 @@ exports.edit = async (req, res) => {
 
     return res.json({
       status: true,
-      message: "Product edited successfully",
+      msg: "Product edited successfully",
     });
   } catch (error) {
     return res.json({
       status: false,
-      message: "Something went wrong editing Product",
+      msg: "Something went wrong editing Product",
     });
   }
 };
@@ -126,11 +130,9 @@ exports.deleteProduct = async (req, res) => {
     if (!product) {
       return res.json({
         status: false,
-        message: "Product Not Found",
+        msg: "Product Not Found",
       });
     }
-
-    deleteImage(product.image);
 
     await prisma.products.delete({
       where: {
@@ -138,70 +140,49 @@ exports.deleteProduct = async (req, res) => {
       },
     });
 
+    deleteImage(product.image);
+
     return res.json({
       status: true,
       msg: "Product deleted successfully",
     });
   } catch (error) {
-    return res.json({
-      status: false,
-      msg: "Something went wrong deleting Product",
-    });
+    if (error.code === "P2003") {
+      // Handle the foreign key constraint error
+      return res.json({
+        status: false,
+        msg: "Cannot delete product. It is referenced in another table.",
+      });
+    } else {
+      return res.json({
+        status: false,
+        msg: "Error deleting product data",
+      });
+    }
   }
 };
 
-exports.addStocks = async (req, res) => {
+exports.productsCount = async (req, res) => {
   try {
-    const { stocks } = req.body;
+    const data = await prisma.products.count();
 
-    const product = await prisma.products.update({
-      where: {
-        id_product: Number(req.params.id),
-      },
-      data: {
-        stocks: {
-          increment: Number(stocks),
-        },
-      },
-    });
+    if (!data) {
+      return res.json({
+        status: false,
+        msg: "Total Products Data Not Found",
+      });
+    }
 
     return res.json({
       status: true,
-      msg: "Stock added successfully",
-      product,
+      msg: "Request Success",
+      total_products: data,
     });
   } catch (error) {
     return res.json({
       status: false,
-      msg: "Something went wrong adding Product stocks",
-    });
-  }
-};
-
-exports.removeStocks = async (req, res) => {
-  try {
-    const { stocks } = req.body;
-
-    const product = await prisma.products.update({
-      where: {
-        id_product: Number(req.params.id),
-      },
-      data: {
-        stocks: {
-          decrement: Number(stocks),
-        },
-      },
-    });
-
-    return res.json({
-      status: true,
-      msg: "Stock decreased successfully",
-      product,
-    });
-  } catch (error) {
-    return res.json({
-      status: false,
-      msg: "Something went wrong decreasing Product stocks",
+      msg: "Something went wrong",
+      error: error,
     });
   }
 };

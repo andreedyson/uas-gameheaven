@@ -95,9 +95,41 @@ exports.deleteBrand = async (req, res) => {
       msg: "Brand deleted successfully",
     });
   } catch (error) {
+    if (error.code === "P2003") {
+      // Handle the foreign key constraint error
+      return res.json({
+        status: false,
+        msg: "Cannot delete brand. It is referenced in another table.",
+      });
+    } else {
+      return res.json({
+        status: false,
+        msg: "Error deleting brand data",
+      });
+    }
+  }
+};
+
+exports.brandsCount = async (req, res) => {
+  try {
+    const data = await prisma.brands.count();
+
+    if (!data) {
+      return res.json({
+        status: false,
+        msg: "Total Brands Data Not Found",
+      });
+    }
+
+    return res.json({
+      status: true,
+      msg: "Request Success",
+      total_brands: data,
+    });
+  } catch (error) {
     return res.json({
       status: false,
-      msg: "Something went wrong deleting Brand",
+      msg: "Something went wrong",
       error: error,
     });
   }

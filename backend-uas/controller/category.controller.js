@@ -76,10 +76,17 @@ exports.deleteCategory = async (req, res) => {
       msg: "Category deleted successfully",
     });
   } catch (error) {
-    return res.json({
-      status: false,
-      msg: "Something went wrong deleting Category",
-      error: error,
-    });
+    if (error.code === "P2003") {
+      // Handle the foreign key constraint error
+      return res.json({
+        status: false,
+        msg: "Cannot delete category. It is referenced in another table.",
+      });
+    } else {
+      return res.json({
+        status: false,
+        msg: "Error deleting category data",
+      });
+    }
   }
 };

@@ -119,3 +119,32 @@ exports.getAll = async (req, res) => {
     });
   }
 };
+
+exports.usersCount = async (req, res) => {
+  try {
+    const data = await prisma.users.count({
+      where: {
+        role: 2,
+      },
+    });
+
+    if (!data) {
+      return res.json({
+        status: false,
+        msg: "Total Users Data Not Found",
+      });
+    }
+
+    return res.json({
+      status: true,
+      msg: "Request Success",
+      total_users: data,
+    });
+  } catch (error) {
+    return res.json({
+      status: false,
+      msg: "Something went wrong",
+      error: error,
+    });
+  }
+};

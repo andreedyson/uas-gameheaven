@@ -29,6 +29,31 @@ const routes = [
         name: "dashboardAdmin",
         component: () => import("pages/admin/Index.vue"),
       },
+      {
+        path: "products",
+        name: "dataProductsAdmin",
+        component: () => import("pages/admin/products/Index.vue"),
+      },
+      {
+        path: "products/edit/:id",
+        name: "editDataProductsAdmin",
+        component: () => import("pages/admin/products/Edit.vue"),
+      },
+      {
+        path: "transactions",
+        name: "dataTransactionsAdmin",
+        component: () => import("pages/admin/transactions/Index.vue"),
+      },
+      {
+        path: "transactions/edit/:id",
+        name: "editDataTransactionsAdmin",
+        component: () => import("pages/admin/transactions/Edit.vue"),
+      },
+      {
+        path: "brands",
+        name: "dataBrandsAdmin",
+        component: () => import("pages/admin/brands/Index.vue"),
+      },
     ],
   },
 
