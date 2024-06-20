@@ -4,11 +4,20 @@ const bcrypt = require("bcrypt");
 
 exports.register = async (req, res) => {
   try {
-    const data = req.body;
+    let { username, full_name, phone, email, password } = req.body;
+
+    const validUsername = username.replace(/\s+/g, "").trim().toLowerCase();
+
+    if (!username || !full_name || !phone || !password) {
+      return res.json({
+        status: false,
+        msg: "Please filled out the form completely.",
+      });
+    }
 
     const userExist = await prisma.users.findUnique({
       where: {
-        username: data.username,
+        username: username,
       },
     });
 
@@ -19,13 +28,16 @@ exports.register = async (req, res) => {
       });
     } else {
       const salt = bcrypt.genSaltSync(10);
-      const hashedPassword = bcrypt.hashSync(data.password, salt);
-      data.password = hashedPassword;
+      const hashedPassword = bcrypt.hashSync(password, salt);
+      password = hashedPassword;
 
       await prisma.users.create({
         data: {
-          ...data,
-          username: data.username.toLowerCase(),
+          username: validUsername,
+          full_name: full_name,
+          phone: phone,
+          email: email,
+          password: password,
         },
       });
 
@@ -46,6 +58,13 @@ exports.login = async (req, res) => {
         username: req.body.username,
       },
     });
+
+    if (!req.body.username | !req.body.password) {
+      return res.json({
+        status: false,
+        msg: "Please filled out the form completely",
+      });
+    }
 
     if (userExist) {
       const isPasswordCorrect = bcrypt.compareSync(

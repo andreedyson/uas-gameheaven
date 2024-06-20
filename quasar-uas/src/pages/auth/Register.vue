@@ -23,28 +23,49 @@
                   <div class="q-mb-md text-sm">
                     Register an account to start using the app.
                   </div>
-                  <q-form @submit="onSubmit" class="flex flex-col gap-3">
+                  <q-form @submit="onSubmit" class="flex flex-col">
                     <q-input
                       v-model="form.username"
                       type="text"
                       label="Username"
+                      :rules="[
+                        (val) => val !== '' || 'Please enter a username',
+                        (val) =>
+                          val.length >= 4 ||
+                          'Username can not be less than 4 characters',
+                      ]"
                     />
                     <q-input
                       v-model="form.full_name"
                       type="text"
                       label="Nama Lengkap"
+                      :rules="[
+                        (val) => val !== '' || 'Please enter your full name',
+                      ]"
                     />
-                    <q-input v-model="form.email" type="text" label="Email" />
+                    <q-input
+                      v-model="form.email"
+                      type="text"
+                      label="Email"
+                      :rules="[(val) => val !== '' || 'Please enter an email']"
+                    />
                     <q-input
                       v-model="form.phone"
                       type="text"
                       label="Nomor Telepon"
+                      :rules="[
+                        (val) => val !== '' || 'Please enter a phone number',
+                      ]"
                     />
                     <q-input
                       v-model="form.password"
                       :type="showPassword ? 'text' : 'password'"
                       label="Password"
+                      :rules="[
+                        (val) => val !== '' || 'Please enter a password',
+                      ]"
                     >
+                      >
                       <template v-slot:append>
                         <q-icon
                           @click="togglePassword"
@@ -62,7 +83,11 @@
                       class="w-full mt-6"
                     />
                     <div
-                      class="text-center w-full font-semibold duration-200 text-gray-500 hover:text-black"
+                      :class="`text-center w-full font-semibold duration-200   ${
+                        Dark.isActive
+                          ? 'text-gray-200 hover:text-white'
+                          : 'text-gray-500 hover:text-black'
+                      }`"
                     >
                       <router-link :to="{ name: 'loginPage' }">
                         Already have an account?
@@ -83,10 +108,14 @@
 <script setup>
 import { api } from "src/boot/axios";
 import { ref } from "vue";
-import { useQuasar } from "quasar";
+import { Dark, useQuasar } from "quasar";
+import { useRouter } from "vue-router";
 
 const q = useQuasar();
+const router = useRouter();
 const showPassword = ref(false);
+
+const btnStatus = ref(false);
 
 const form = ref({
   username: "",
@@ -98,6 +127,8 @@ const form = ref({
 
 const onSubmit = async () => {
   try {
+    btnStatus.value = true;
+
     const res = await api.post("/users/register", {
       ...form.value,
     });
@@ -107,10 +138,13 @@ const onSubmit = async () => {
         message: res.data.msg,
         color: "positive",
       });
+
       router.push({
         name: "loginPage",
       });
     } else {
+      btnStatus.value = false;
+
       q.notify({
         message: res.data.msg,
         color: "negative",
