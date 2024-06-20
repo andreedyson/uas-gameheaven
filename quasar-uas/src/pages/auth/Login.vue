@@ -27,11 +27,24 @@
                     Enter your credentials to access the app.
                   </div>
                   <q-form @submit="onLogin" class="flex flex-col gap-3">
-                    <q-input v-model="username" type="text" label="Username" />
+                    <q-input
+                      v-model="username"
+                      type="text"
+                      label="Username"
+                      :rules="[
+                        (val) => val !== '' || 'Please enter a username',
+                        (val) =>
+                          val.length >= 4 ||
+                          'Username can not be less than 4 characters',
+                      ]"
+                    />
                     <q-input
                       v-model="password"
                       :type="showPassword ? 'text' : 'password'"
                       label="Password"
+                      :rules="[
+                        (val) => val !== '' || 'Please enter a password',
+                      ]"
                     >
                       <template v-slot:append>
                         <q-icon
@@ -50,7 +63,11 @@
                       class="w-full mt-6"
                     />
                     <div
-                      class="text-center w-full font-semibold duration-200 text-gray-500 hover:text-black"
+                      :class="`text-center w-full font-semibold duration-200   ${
+                        Dark.isActive
+                          ? 'text-gray-200 hover:text-white'
+                          : 'text-gray-500 hover:text-black'
+                      }`"
                     >
                       <router-link :to="{ name: 'registerPage' }">
                         Don't have an account?
@@ -69,7 +86,7 @@
 </template>
 
 <script setup>
-import { useQuasar } from "quasar";
+import { Dark, useQuasar } from "quasar";
 import { api } from "src/boot/axios";
 import { all } from "src/helper/ListAkses";
 import { setProfile } from "src/helper/Profile";
@@ -85,7 +102,7 @@ const password = ref("");
 
 const onLogin = async () => {
   try {
-    const res = await api.post("users/login", {
+    const res = await api.post("/users/login", {
       username: username.value,
       password: password.value,
     });
@@ -96,7 +113,7 @@ const onLogin = async () => {
         color: "positive",
       });
 
-      const dataUser = res.data.data;
+      const dataUser = res.data.results;
       const adaUser = all.find((r) => {
         return r.value === dataUser.role;
       });

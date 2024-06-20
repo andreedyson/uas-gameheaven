@@ -1,4 +1,4 @@
-import { admin } from "src/helper/ListAkses";
+import { admin, user } from "src/helper/ListAkses";
 
 const routes = [
   {
@@ -14,7 +14,17 @@ const routes = [
   {
     path: "/",
     component: () => import("layouts/MainLayout.vue"),
-    children: [{ path: "", component: () => import("pages/IndexPage.vue") }],
+    meta: {
+      allowedRole: user.value,
+      auth: true,
+    },
+    children: [
+      {
+        path: "user",
+        name: "dashboardUser",
+        component: () => import("pages/user/Index.vue"),
+      },
+    ],
   },
   {
     path: "/",

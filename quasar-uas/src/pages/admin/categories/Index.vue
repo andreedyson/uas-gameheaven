@@ -200,7 +200,7 @@ const onSubmit = async () => {
 
         formDialog.value = false;
         resetForm();
-        getBrandsData();
+        getcategoriesData();
       } else {
         Notify.create({
           message: res.data.msg,
@@ -229,6 +229,7 @@ const onSubmit = async () => {
       }
     }
   } catch (error) {
+    console.log(error);
     Notify.create({
       message: "Something went wrong",
       color: "negative",
