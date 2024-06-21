@@ -35,10 +35,10 @@
     </section>
 
     <!-- Top Products Section -->
-    <section id="top" class="px-6 py-[150px]">
-      <div class="space-y-6">
+    <section id="top" class="px-6 py-[120px]">
+      <div class="space-y-8">
         <div>
-          <h1 :class="`text-4xl font-bold`">Top Products</h1>
+          <h1 class="text-4xl font-bold text-center">Top Products</h1>
         </div>
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
           <div v-for="(product, i) in productData.slice(0, 4)" :key="i">
@@ -95,9 +95,52 @@
     </section>
 
     <section id="about" class="px-6 py-[150px]">
-      <div class="space-y-6">
+      <div>
         <div>
-          <h1 :class="`text-4xl font-bold text-center`">About Us</h1>
+          <h1 :class="`text-4xl font-bold text-center mb-8`">About Us</h1>
+        </div>
+        <div class="flex flex-row gap-12 justify-center lg:flex-row">
+          <div class="flex items-center justify-center lg:justify-end">
+            <div class="w-[500px]">
+              <q-img
+                src="~assets/img/about.svg"
+                :ratio="1"
+                class="w-full"
+                fit="cover"
+              />
+            </div>
+          </div>
+          <div class="space-y-4 flex flex-col justify-center">
+            <h4 class="font-semibold text-3xl">
+              Aksesoris Komputer <br />
+              Berkualitas Tinggi
+            </h4>
+            <p class="max-w-[450px] text-base">
+              Tentukan pilihan terbaik untuk perangkat gaming Anda yang dapat
+              memberikan performa optimal dan kenyamanan maksimal selama
+              bermain.
+            </p>
+            <div class="space-y-8">
+              <div class="flex items-center gap-4">
+                <q-icon name="category" size="md" color="blue-8" />
+                <p class="text-sm md:text-base max-w-[400px]">
+                  Koleksi aksesoris gaming terbaik.
+                </p>
+              </div>
+              <div class="flex items-center gap-4">
+                <q-icon name="sell" size="md" color="green-8" />
+                <p class="text-sm md:text-base">
+                  Harga ramah kantong untuk produk berkualitas.
+                </p>
+              </div>
+              <div class="flex items-center gap-4">
+                <q-icon name="support_agent" size="md" color="yellow-8" />
+                <p class="text-sm md:text-base">
+                  Pelayanan pelanggan ramah dan responsif.
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>

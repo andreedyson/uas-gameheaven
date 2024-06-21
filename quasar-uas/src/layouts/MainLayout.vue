@@ -16,7 +16,7 @@
           <a href="#about">About Us</a>
         </div>
 
-        <div>
+        <div class="max-md:hidden">
           <q-btn
             round
             flat
