@@ -7,14 +7,6 @@ export const getProfile = () => {
 };
 
 export const setProfile = (data) => {
-  Cookies.set("username", data.username, {
-    expires: 24 * 60 * 60,
-  });
-
-  Cookies.set("email", data.email, {
-    expires: 24 * 60 * 60,
-  });
-
   Cookies.set(storage, JSON.stringify(data), {
     expires: 24 * 60 * 60,
   });

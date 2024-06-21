@@ -32,8 +32,8 @@
             <q-menu>
               <div class="p-3 w-[240px]">
                 <div>
-                  <p class="font-semibold">admin@mail.com</p>
-                  <p class="text-gray-400">Admin</p>
+                  <p class="font-semibold">{{ cookiesData.email }}</p>
+                  <p class="text-gray-400">{{ cookiesData.username }}</p>
                 </div>
 
                 <q-separator class="my-4" />
@@ -87,7 +87,14 @@
           GameHeaven
         </q-item-label>
 
-        <q-item clickable :to="{ name: 'dashboardAdmin' }" class="font-medium">
+        <q-item
+          clickable
+          :to="{ name: 'dashboardAdmin' }"
+          class="font-medium"
+          :exact-active-class="`${
+            Dark.isActive ? 'text-secondary' : 'text-primary'
+          }`"
+        >
           <q-item-section avatar>
             <q-icon name="grid_view" />
           </q-item-section>
@@ -99,6 +106,9 @@
           clickable
           :to="{ name: 'dataTransactionsAdmin' }"
           class="font-medium"
+          :exact-active-class="`${
+            Dark.isActive ? 'text-secondary' : 'text-primary'
+          }`"
         >
           <q-item-section avatar>
             <q-icon name="receipt_long" />
@@ -111,6 +121,9 @@
           clickable
           :to="{ name: 'dataProductsAdmin' }"
           class="font-medium"
+          :exact-active-class="`${
+            Dark.isActive ? 'text-secondary' : 'text-primary'
+          }`"
         >
           <q-item-section avatar>
             <q-icon name="conveyor_belt" />
@@ -123,7 +136,7 @@
           clickable
           :to="{ name: 'dataBrandsAdmin' }"
           class="font-medium"
-          exact-active-class="`${
+          :exact-active-class="`${
             Dark.isActive ? 'text-secondary' : 'text-primary'
           }`"
         >
@@ -138,6 +151,9 @@
           clickable
           :to="{ name: 'dataCategoriesAdmin' }"
           class="font-medium"
+          :exact-active-class="`${
+            Dark.isActive ? 'text-secondary' : 'text-primary'
+          }`"
         >
           <q-item-section avatar>
             <q-icon name="category" />
@@ -146,7 +162,14 @@
             <q-item-label>Categories</q-item-label>
           </q-item-section>
         </q-item>
-        <q-item clickable :to="{ name: 'dataUsersAdmin' }" class="font-medium">
+        <q-item
+          clickable
+          :to="{ name: 'dataUsersAdmin' }"
+          class="font-medium"
+          :exact-active-class="`${
+            Dark.isActive ? 'text-secondary' : 'text-primary'
+          }`"
+        >
           <q-item-section avatar>
             <q-icon name="person" />
           </q-item-section>
@@ -168,9 +191,11 @@
 import { onMounted, ref } from "vue";
 import { useRouter } from "vue-router";
 import { Cookies, Dark } from "quasar";
+import { getProfile } from "src/helper/Profile";
 
 const leftDrawerOpen = ref(false);
 const router = useRouter();
+const cookiesData = getProfile();
 
 const toggleLeftDrawer = () => {
   leftDrawerOpen.value = !leftDrawerOpen.value;
