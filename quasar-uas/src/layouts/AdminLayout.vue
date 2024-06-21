@@ -214,11 +214,6 @@ const toggleDarkMode = () => {
 };
 
 onMounted(() => {
-  const savedTheme = localStorage.getItem("theme");
-  if (savedTheme) {
-    Dark.set(savedTheme === "dark");
-  } else {
-    Dark.set(false);
-  }
+  Dark.set(false);
 });
 </script>

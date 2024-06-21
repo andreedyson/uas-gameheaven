@@ -10,8 +10,10 @@
         </router-link>
 
         <div class="flex justify-center items-center gap-8 max-md:hidden">
-          <a href="#">Home</a>
-          <a href="#">Top Products</a>
+          <a href="#home">Home</a>
+          <a href="#top">Top Products</a>
+          <a href="#category">Category</a>
+          <a href="#about">About Us</a>
         </div>
 
         <div>

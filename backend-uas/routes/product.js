@@ -6,6 +6,7 @@ const {
   edit,
   deleteProduct,
   productsCount,
+  getByCategory,
 } = require("../controller/product.controller");
 const { upload } = require("../uploadconfig");
 
@@ -17,5 +18,6 @@ router.get("/get/:id", getById);
 router.put("/edit/:id", uploadImage, edit);
 router.delete("/delete/:id", deleteProduct);
 router.get("/total-products", productsCount);
+router.get("/get-by-category", getByCategory);
 
 module.exports = router;

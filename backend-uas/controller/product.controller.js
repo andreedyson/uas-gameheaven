@@ -162,6 +162,24 @@ exports.deleteProduct = async (req, res) => {
   }
 };
 
+exports.getByCategory = async (req, res) => {
+  console.log(req.body.category);
+  try {
+    const data = await prisma.products.findMany({
+      where: {
+        categories: req.body.category,
+      },
+    });
+    console.log(data);
+  } catch (error) {
+    return res.json({
+      status: false,
+      msg: "Something went wrong",
+      error: error,
+    });
+  }
+};
+
 exports.productsCount = async (req, res) => {
   try {
     const data = await prisma.products.count();

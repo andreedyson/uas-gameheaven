@@ -35,14 +35,18 @@
     </section>
 
     <!-- Top Products Section -->
-    <section id="top" class="px-6 py-[100px]">
+    <section id="top" class="px-6 py-[150px]">
       <div class="space-y-6">
         <div>
-          <h1 :class="`text-4xl font-bold `">Top Products</h1>
+          <h1 :class="`text-4xl font-bold`">Top Products</h1>
         </div>
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
           <div v-for="(product, i) in productData.slice(0, 4)" :key="i">
-            <q-card flat :class="`${Dark.isActive ? 'bg-dark' : 'bg-grey-3'}`">
+            <q-card
+              :class="`${
+                Dark.isActive ? 'bg-dark' : 'bg-grey-3'
+              } cursor-pointer duration-200 hover:scale-[1.015]`"
+            >
               <q-img
                 :src="`${baseURL}/img/product/${product.image}`"
                 :ratio="1"
@@ -69,6 +73,34 @@
         </div>
       </div>
     </section>
+
+    <!-- Category Section -->
+    <section id="category" class="px-6 py-[80px] bg-[#03052f] text-white">
+      <div class="space-y-8">
+        <div>
+          <h1 :class="`text-4xl font-bold text-center`">Category</h1>
+        </div>
+        <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-4">
+          <q-card
+            v-for="cat in categoriesList"
+            :key="cat.id_category"
+            class="bg-white/20 backdrop-blur-md h-[140px] flex justify-center items-center"
+          >
+            <q-card-section class="text-2xl font-semibold">{{
+              cat.name
+            }}</q-card-section>
+          </q-card>
+        </div>
+      </div>
+    </section>
+
+    <section id="about" class="px-6 py-[150px]">
+      <div class="space-y-6">
+        <div>
+          <h1 :class="`text-4xl font-bold text-center`">About Us</h1>
+        </div>
+      </div>
+    </section>
   </div>
 </template>
 
@@ -80,10 +112,14 @@ import { formatPrice } from "src/helper/utils";
 import { onMounted, ref } from "vue";
 
 const productData = ref([]);
+const categoriesList = ref([]);
+const brandsList = ref([]);
 
 onMounted(() => {
   getProfile();
   getProductsData();
+  getCategoriesData();
+  getBrandsData();
 });
 
 const getProductsData = async () => {
@@ -95,6 +131,36 @@ const getProductsData = async () => {
   } catch (error) {
     Notify.create({
       message: "Error getting product data",
+      color: "negative",
+    });
+  }
+};
+
+const getCategoriesData = async () => {
+  try {
+    const res = await api.get("/category/get");
+    if (res.data.status) {
+      categoriesList.value = res.data.results;
+    }
+  } catch (error) {
+    console.log(error);
+    Notify.create({
+      message: "Error getting categories data",
+      color: "negative",
+    });
+  }
+};
+
+const getBrandsData = async () => {
+  try {
+    const res = await api.get("/brand/get");
+    if (res.data.status) {
+      brandsList.value = res.data.results;
+    }
+  } catch (error) {
+    console.log(error);
+    Notify.create({
+      message: "Error getting brands data",
       color: "negative",
     });
   }
