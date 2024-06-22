@@ -1,6 +1,6 @@
 <template>
   <q-layout view="lHh Lpr lFf">
-    <q-header unelevated class="py-2">
+    <q-header unelevated class="py-2 bg-accent">
       <q-toolbar class="justify-between">
         <router-link
           :to="{ name: 'dashboardUser' }"
@@ -11,8 +11,8 @@
 
         <div class="flex justify-center items-center gap-8 max-md:hidden">
           <a href="#home">Home</a>
-          <a href="#top">Top Products</a>
           <a href="#category">Category</a>
+          <a href="#top">Top Products</a>
           <a href="#about">About Us</a>
         </div>
 
