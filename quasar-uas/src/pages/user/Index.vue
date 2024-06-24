@@ -42,7 +42,7 @@
           </div>
         </div>
         <div class="w-full">
-          <div class="w-full lg:max-w-[90%]">
+          <div class="w-full">
             <q-img src="~assets/img/hero.png" />
           </div>
         </div>
@@ -94,16 +94,26 @@
                 <q-badge color="accent" class="mb-1.5">
                   <span>{{ product.categories.name }}</span>
                 </q-badge>
-                <div class="mb-2 line-clamp-1">
-                  <h3 class="text-xl font-semibold">{{ product.name }}</h3>
+                <div class="mb-2 flex items-center justify-between">
+                  <h3 class="text-xl font-semibold line-clamp-1">
+                    {{ product.name }}
+                  </h3>
                 </div>
                 <div class="line-clamp-4 text-justify mb-3">
                   {{ product.description }}
                 </div>
-                <div>
+                <div class="mb-4">
                   <p class="text-xl font-semibold">
                     {{ formatPrice(product.price) }}
                   </p>
+                </div>
+                <div>
+                  <q-btn
+                    color="accent"
+                    icon="shopping_cart"
+                    label="Buy Now"
+                    class="w-full"
+                  />
                 </div>
               </q-card-section>
             </q-card>
@@ -165,6 +175,49 @@
         </div>
       </div>
     </section>
+
+    <!-- Footer Section -->
+    <footer class="px-6 py-20 bg-primary text-white md:px-12">
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4">
+        <div class="flex flex-col gap-4 md:col-span-2">
+          <router-link
+            :to="{ name: 'dashboardUser' }"
+            class="text-2xl font-semibold italic"
+          >
+            GameHeaven
+          </router-link>
+          <p class="md:max-w-[450px]">
+            Find the best accessories for your high-level gaming experience and
+            dominate the competition with precision control, immersive audio,
+            and unmatched comfort.
+          </p>
+        </div>
+        <div class="flex flex-col gap-4 max-w-[150px]">
+          <h4 class="text-lg font-semibold">Links</h4>
+          <div class="flex flex-col gap-2">
+            <a href="#home">Home</a>
+            <a href="#category">Category</a>
+            <a href="#top">Top Products</a>
+            <a href="#about">About Us</a>
+            <a href="#contact">Contact Us</a>
+          </div>
+        </div>
+        <div class="flex flex-col gap-4">
+          <h4 class="text-lg font-semibold">Subscribe to our newsletter</h4>
+          <p>
+            Get the latest info on new items, promos, and giveaway from our
+            store.
+          </p>
+          <q-input
+            bg-color="white"
+            rounded
+            outlined
+            v-model="text"
+            label="Enter your email"
+          />
+        </div>
+      </div>
+    </footer>
   </div>
 </template>
 

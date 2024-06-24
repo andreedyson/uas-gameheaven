@@ -13,6 +13,10 @@ const routes = [
   },
   {
     path: "/",
+    redirect: "/login",
+  },
+  {
+    path: "/",
     component: () => import("layouts/MainLayout.vue"),
     meta: {
       allowedRole: user.value,
