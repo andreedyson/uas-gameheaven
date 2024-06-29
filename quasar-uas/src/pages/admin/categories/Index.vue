@@ -17,6 +17,8 @@
             :columns="columns"
             row-key="name"
             class="w-full"
+            color="secondary"
+            :loading="loading"
             :rows-per-page-options="[10, 25, 50]"
           >
             <template v-slot:body="props">
@@ -117,6 +119,8 @@ import { api } from "src/boot/axios";
 import { formatPrice } from "src/helper/utils";
 import { onMounted, ref } from "vue";
 
+const loading = ref(false);
+
 const q = useQuasar();
 const editMode = ref(false);
 const idCategory = ref(0);
@@ -156,6 +160,8 @@ onMounted(() => {
 
 const getcategoriesData = async () => {
   try {
+    loading.value = true;
+
     const res = await api.get("/category/get");
 
     if (res.data.status) {
@@ -166,6 +172,8 @@ const getcategoriesData = async () => {
       message: "Error getting categories data",
       color: "negative",
     });
+  } finally {
+    loading.value = false;
   }
 };
 

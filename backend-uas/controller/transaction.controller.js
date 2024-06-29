@@ -141,6 +141,32 @@ exports.getById = async (req, res) => {
   }
 };
 
+exports.getByUserId = async (req, res) => {
+  try {
+    console.log(req.body.username);
+    const data = await prisma.transactions.findMany({
+      where: {
+        username: req.params.username,
+      },
+      include: {
+        users: true,
+        products: true,
+      },
+    });
+    return res.json({
+      status: true,
+      msg: "Request Success",
+      results: data,
+    });
+  } catch (error) {
+    return res.json({
+      status: false,
+      msg: "Something went wrong getting User Transaction",
+      error: error,
+    });
+  }
+};
+
 exports.edit = async (req, res) => {
   try {
     const { username, productId, quantity, date, status } = req.body;

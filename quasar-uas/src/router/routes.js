@@ -28,6 +28,11 @@ const routes = [
         name: "dashboardUser",
         component: () => import("pages/user/Index.vue"),
       },
+      {
+        path: "user/transactions",
+        name: "dataTransactionsUser",
+        component: () => import("pages/user/transactions/Index.vue"),
+      },
     ],
   },
   {

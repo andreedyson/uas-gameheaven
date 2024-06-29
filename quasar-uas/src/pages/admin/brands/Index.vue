@@ -17,6 +17,8 @@
             :columns="columns"
             row-key="name"
             class="w-full"
+            color="secondary"
+            :loading="loading"
             :rows-per-page-options="[10, 25, 50]"
           >
             <template v-slot:body="props">
@@ -125,6 +127,8 @@ import { api } from "src/boot/axios";
 import { formatPrice } from "src/helper/utils";
 import { onMounted, ref } from "vue";
 
+const loading = ref(true)
+
 const q = useQuasar();
 const editMode = ref(false);
 
@@ -166,6 +170,8 @@ onMounted(() => {
 
 const getBrandsData = async () => {
   try {
+    loading.value = true
+
     const res = await api.get("/brand/get");
 
     if (res.data.status) {
@@ -176,6 +182,8 @@ const getBrandsData = async () => {
       message: "Error getting brands data",
       color: "negative",
     });
+  } finally {
+    loading.value = false;
   }
 };
 

@@ -20,17 +20,17 @@
                 • High Quality Gaming Accessories •
               </q-chip>
             </div>
-            <h1 class="font-bold text-3xl md:text-5xl xl:text-7xl/[80px]">
-              Secret Weapon <br />
-              Every
+            <h1 class="font-bold text-3xl md:text-5xl xl:text-6xl/[80px]">
+              Secret Weapon Every
+              <br />
               <span class="text-secondary">Gamer</span> Needs
             </h1>
-            <p class="max-w-[550px] mt-2 text-base md:text-lg">
+            <p class="max-w-[550px] mt-8 text-base md:text-lg">
               Stop playing, start dominating. This isn't just another accessory,
               it's the game-changer you've been waiting for.
             </p>
           </div>
-          <div class="mt-4">
+          <div class="mt-8">
             <q-btn
               unelevated
               no-caps
@@ -202,19 +202,24 @@
             <a href="#contact">Contact Us</a>
           </div>
         </div>
-        <div class="flex flex-col gap-4">
+        <div id="contact" class="flex flex-col gap-4">
           <h4 class="text-lg font-semibold">Subscribe to our newsletter</h4>
           <p>
             Get the latest info on new items, promos, and giveaway from our
             store.
           </p>
-          <q-input
-            bg-color="white"
-            rounded
-            outlined
-            v-model="text"
-            label="Enter your email"
-          />
+          <div class="relative">
+            <input
+              type="text"
+              placeholder="Enter your email"
+              class="px-3 py-4 outline-none rounded-full w-full text-black"
+            />
+            <button
+              class="absolute right-3 top-2.5 px-4 py-1.5 bg-secondary rounded-full"
+            >
+              Subscribe
+            </button>
+          </div>
         </div>
       </div>
     </footer>

@@ -28,6 +28,7 @@ exports.register = async (req, res) => {
       });
     } else {
       const salt = bcrypt.genSaltSync(10);
+      x;
       const hashedPassword = bcrypt.hashSync(password, salt);
       password = hashedPassword;
 
@@ -71,6 +72,8 @@ exports.login = async (req, res) => {
         req.body.password,
         userExist.password
       );
+
+      console.log(isPasswordCorrect);
 
       if (isPasswordCorrect) {
         const data = {

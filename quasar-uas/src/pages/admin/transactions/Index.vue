@@ -16,6 +16,8 @@
             :rows="rows"
             :columns="columns"
             row-key="name"
+            :loading="loading"
+            color="secondary"
             class="w-full"
             :rows-per-page-options="[10, 25, 50]"
           >
@@ -173,6 +175,8 @@ import { api } from "src/boot/axios";
 import { dateFormat, formatPrice, getBadgeStatus } from "src/helper/utils";
 import { onMounted, ref } from "vue";
 
+const loading = ref(true);
+
 const q = useQuasar();
 
 const userList = ref([]);
@@ -257,6 +261,8 @@ onMounted(() => {
 
 const getTransactionsData = async () => {
   try {
+    loading.value = true;
+
     const res = await api.get("/transaction/get");
     if (res.data.status) {
       rows.value = res.data.results;
@@ -266,6 +272,8 @@ const getTransactionsData = async () => {
       message: "Error getting transaction data",
       color: "negative",
     });
+  } finally {
+    loading.value = false;
   }
 };
 

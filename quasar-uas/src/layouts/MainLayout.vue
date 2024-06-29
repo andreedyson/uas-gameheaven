@@ -57,6 +57,14 @@
                         <p>Settings</p>
                       </q-item-section>
                     </q-item>
+                    <q-item clickable :to="{ name: 'dataTransactionsUser' }">
+                      <q-item-section avatar>
+                        <q-icon name="receipt" />
+                      </q-item-section>
+                      <q-item-section>
+                        <p>Transactions</p>
+                      </q-item-section>
+                    </q-item>
                   </q-list>
 
                   <q-btn

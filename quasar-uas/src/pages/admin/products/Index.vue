@@ -16,6 +16,8 @@
           :columns="columns"
           row-key="name"
           class="w-full"
+          color="secondary"
+          :loading="loading"
           :rows-per-page-options="[10, 25, 50]"
         >
           <template v-slot:body="props">
@@ -196,6 +198,8 @@ import { onMounted, ref } from "vue";
 import { useRouter } from "vue-router";
 import { formatPrice } from "src/helper/utils";
 
+const loading = ref(true);
+
 const q = useQuasar();
 const router = useRouter();
 
@@ -292,6 +296,8 @@ onMounted(() => {
 
 const getProductsData = async () => {
   try {
+    loading.value = true;
+
     const res = await api.get("/product/get");
     if (res.data.status) {
       rows.value = res.data.results;
@@ -301,6 +307,8 @@ const getProductsData = async () => {
       message: "Error getting product data",
       color: "negative",
     });
+  } finally {
+    loading.value = false;
   }
 };
 
