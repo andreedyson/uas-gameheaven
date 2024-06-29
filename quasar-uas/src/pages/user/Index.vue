@@ -109,6 +109,7 @@
                 </div>
                 <div>
                   <q-btn
+                    @click="openDialog(product)"
                     color="accent"
                     icon="shopping_cart"
                     label="Buy Now"
@@ -223,6 +224,70 @@
         </div>
       </div>
     </footer>
+
+    <q-dialog v-model="transactionDialog" v-if="activeData !== null" persistent>
+      <q-card style="min-width: 350px">
+        <q-card-section>
+          <div class="text-h6">Buy Product</div>
+        </q-card-section>
+
+        <q-card-section class="q-pt-none space-y-4">
+          <div class="flex justify-between items-center">
+            <p>Product</p>
+            <p class="font-semibold">{{ activeData.name }}</p>
+          </div>
+          <div class="flex justify-between items-center">
+            <p>Categories</p>
+            <p class="font-semibold">{{ activeData.categories.name }}</p>
+          </div>
+          <div class="flex justify-between items-center">
+            <p>Brand</p>
+            <p class="font-semibold">{{ activeData.brands.name }}</p>
+          </div>
+          <div class="flex justify-between items-center">
+            <p>Stocks</p>
+            <p class="font-semibold">{{ activeData.stocks }} Pc(s) left</p>
+          </div>
+          <q-form ref="transactionForm" @submit="onSubmit">
+            <q-input
+              v-if="activeData.stocks > 0"
+              type="number"
+              label="Quantity"
+              color="secondary"
+              v-model="quantity"
+              :rules="[
+                (val) => val > 0 || 'Quantity should be 1 minimum',
+                (val) =>
+                  val < activeData.stocks ||
+                  `Quantity should be less than or equal to ${activeData.stocks} item`,
+              ]"
+            />
+          </q-form>
+          <div v-if="activeData.stocks > 0">
+            <h3 class="text-lg font-semibold">Total</h3>
+            <p class="text-xl font-bold">
+              {{ formatPrice(quantity * activeData.price) }}
+            </p>
+          </div>
+          <div v-else>
+            <p class="text-center text-red-600 font-bold">
+              Product is out of stock
+            </p>
+          </div>
+        </q-card-section>
+
+        <q-card-actions align="right" class="text-primary q-pb-lg">
+          <q-btn label="Cancel" outline color="negative" v-close-popup />
+          <q-btn
+            @click="transactionForm.submit()"
+            flat
+            color="secondary"
+            label="Buy Product"
+            :disable="activeData.stocks === 0"
+          />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
   </div>
 </template>
 
@@ -232,6 +297,12 @@ import { api, baseURL } from "src/boot/axios";
 import { getProfile } from "src/helper/Profile";
 import { formatPrice } from "src/helper/utils";
 import { onMounted, ref } from "vue";
+
+const transactionDialog = ref(false);
+const transactionForm = ref();
+const activeData = ref(null);
+
+const quantity = ref(0);
 
 const productData = ref([]);
 const categoriesList = ref([]);
@@ -286,5 +357,42 @@ const getBrandsData = async () => {
       color: "negative",
     });
   }
+};
+
+const openDialog = (data) => {
+  activeData.value = data;
+  transactionDialog.value = true;
+};
+
+const onSubmit = async () => {
+  try {
+    console.log(activeData.value.id_product);
+    const res = await api.post("/transaction/insert", {
+      username: getProfile().username,
+      productId: Number(activeData.value.id_product),
+      quantity: quantity.value,
+      total: quantity.value * activeData.value.price,
+      date: new Date(),
+    });
+
+    if (res.data.status) {
+      Notify.create({
+        message: res.data.msg,
+        color: "positive",
+      });
+
+      resetForm();
+      transactionDialog.value = false;
+    }
+  } catch (error) {
+    Notify.create({
+      message: "Something went wrong",
+      color: "negative",
+    });
+  }
+};
+
+const resetForm = () => {
+  quantity.value = 0;
 };
 </script>

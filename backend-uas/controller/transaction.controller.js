@@ -6,6 +6,8 @@ exports.insert = async (req, res) => {
     const { username, productId, quantity, date, status } = req.body;
     let total = 0;
 
+    console.log(productId);
+
     const user = await prisma.users.findUnique({
       where: {
         username: username,
@@ -75,7 +77,6 @@ exports.insert = async (req, res) => {
       msg: "Transaction added successfully",
     });
   } catch (error) {
-    console.log(error);
     return res.json({
       status: false,
       msg: "Something went wrong creating Transaction",

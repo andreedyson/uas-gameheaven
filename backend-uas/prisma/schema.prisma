@@ -28,6 +28,7 @@ model products {
   description  String         @db.Text
   image        String         @db.TinyText
   stocks       Int
+  is_deleted   Boolean        @default(false)
   categories   categories     @relation(fields: [category], references: [id_category], onUpdate: Restrict, map: "products_ibfk_1")
   brands       brands         @relation(fields: [brand], references: [id_brand], onUpdate: Restrict, map: "products_ibfk_2")
   transactions transactions[]
@@ -53,7 +54,7 @@ model transactions {
   quantity        Int
   total_price     Int
   date            DateTime            @db.Date
-  status          transactions_status
+  status          transactions_status @default(Pending)
   users           users               @relation(fields: [username], references: [username], onUpdate: Restrict, map: "transactions_ibfk_1")
   products        products            @relation(fields: [id_product], references: [id_product], onUpdate: Restrict, map: "transactions_ibfk_2")
 
