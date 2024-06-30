@@ -377,7 +377,8 @@ const onSubmit = async () => {
         color: "positive",
       });
 
-      router.back();
+      formDialog.value = false; // Close the dialog
+      getProductsData();
     } else {
       Notify.create({
         message: res.data.msg,
@@ -406,7 +407,7 @@ const deleteProduct = (id) => {
           message: res.data.msg,
           color: "positive",
         });
-        getData();
+        getProductsData();
       } else {
         Notify.create({
           message: res.data.msg,

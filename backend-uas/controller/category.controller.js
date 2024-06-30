@@ -41,6 +41,28 @@ exports.getData = async (req, res) => {
   }
 };
 
+exports.getById = async (req, res) => {
+  try {
+    const data = await prisma.categories.findUnique({
+      where: {
+        id_category: Number(req.params.id),
+      },
+    });
+
+    return res.json({
+      status: true,
+      msg: "Request Success",
+      results: data,
+    });
+  } catch (error) {
+    return res.json({
+      status: false,
+      msg: "Something went wrong getting Category",
+      error: error,
+    });
+  }
+};
+
 exports.edit = async (req, res) => {
   try {
     await prisma.categories.update({

@@ -28,7 +28,6 @@ model products {
   description  String         @db.Text
   image        String         @db.TinyText
   stocks       Int
-  is_deleted   Boolean        @default(false)
   categories   categories     @relation(fields: [category], references: [id_category], onUpdate: Restrict, map: "products_ibfk_1")
   brands       brands         @relation(fields: [brand], references: [id_brand], onUpdate: Restrict, map: "products_ibfk_2")
   transactions transactions[]

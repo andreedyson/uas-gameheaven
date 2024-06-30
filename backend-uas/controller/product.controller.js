@@ -4,10 +4,7 @@ const { deleteImage } = require("../uploadconfig");
 
 exports.insert = async (req, res) => {
   try {
-    console.log(req.body);
     const { name, category, brand, price, description, stocks } = req.body;
-
-    console.log(req.body);
 
     await prisma.products.create({
       data: {
@@ -163,14 +160,22 @@ exports.deleteProduct = async (req, res) => {
 };
 
 exports.getByCategory = async (req, res) => {
-  console.log(req.body.category);
   try {
     const data = await prisma.products.findMany({
       where: {
-        categories: req.body.category,
+        category: Number(req.params.category),
+      },
+      include: {
+        categories: true,
+        brands: true,
       },
     });
-    console.log(data);
+
+    return res.json({
+      status: true,
+      msg: "Request Success",
+      results: data,
+    });
   } catch (error) {
     return res.json({
       status: false,

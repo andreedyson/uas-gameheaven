@@ -62,11 +62,18 @@
           <q-card
             v-for="cat in categoriesList"
             :key="cat.id_category"
-            class="bg-white/20 backdrop-blur-md h-[140px] flex justify-center items-center"
+            class="bg-white/20 backdrop-blur-md h-[140px] flex justify-center items-center duration-300 hover:scale-[1.025]"
           >
-            <q-card-section class="text-2xl font-semibold">{{
-              cat.name
-            }}</q-card-section>
+            <router-link
+              :to="{
+                name: 'dataCategoriesUser',
+                params: { id: cat.id_category },
+              }"
+            >
+              <q-card-section class="text-2xl font-semibold">{{
+                cat.name
+              }}</q-card-section>
+            </router-link>
           </q-card>
         </div>
       </div>
@@ -99,7 +106,7 @@
                     {{ product.name }}
                   </h3>
                 </div>
-                <div class="line-clamp-4 text-justify mb-3">
+                <div class="line-clamp-3 text-justify mb-3">
                   {{ product.description }}
                 </div>
                 <div class="mb-4">
@@ -179,7 +186,7 @@
 
     <!-- Footer Section -->
     <footer class="px-6 py-20 bg-primary text-white md:px-12">
-      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4">
+      <div class="grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-4">
         <div class="flex flex-col gap-4 md:col-span-2">
           <router-link
             :to="{ name: 'dashboardUser' }"

@@ -162,21 +162,6 @@
             <q-item-label>Categories</q-item-label>
           </q-item-section>
         </q-item>
-        <q-item
-          clickable
-          :to="{ name: 'dataUsersAdmin' }"
-          class="font-medium"
-          :exact-active-class="`${
-            Dark.isActive ? 'text-secondary' : 'text-primary'
-          }`"
-        >
-          <q-item-section avatar>
-            <q-icon name="person" />
-          </q-item-section>
-          <q-item-section>
-            <q-item-label>Users</q-item-label>
-          </q-item-section>
-        </q-item>
       </q-list>
     </q-drawer>
 

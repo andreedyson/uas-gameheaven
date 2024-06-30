@@ -18,6 +18,6 @@ router.get("/get/:id", getById);
 router.put("/edit/:id", uploadImage, edit);
 router.delete("/delete/:id", deleteProduct);
 router.get("/total-products", productsCount);
-router.get("/get-by-category", getByCategory);
+router.get("/get-category/:category", getByCategory);
 
 module.exports = router;

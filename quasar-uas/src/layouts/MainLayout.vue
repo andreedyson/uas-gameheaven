@@ -1,6 +1,6 @@
 <template>
   <q-layout view="lHh Lpr lFf">
-    <q-header unelevated class="py-2 px-12 bg-accent">
+    <q-header unelevated class="py-2 px-4 md:px-10 bg-accent">
       <q-toolbar class="justify-between">
         <router-link
           :to="{ name: 'dashboardUser' }"
@@ -41,23 +41,13 @@
 
                 <div>
                   <q-list>
-                    <q-item clickable>
-                      <q-item-section avatar>
-                        <q-icon name="person" />
-                      </q-item-section>
-                      <q-item-section>
-                        <p>Account</p>
-                      </q-item-section>
-                    </q-item>
-                    <q-item clickable>
-                      <q-item-section avatar>
-                        <q-icon name="settings" />
-                      </q-item-section>
-                      <q-item-section>
-                        <p>Settings</p>
-                      </q-item-section>
-                    </q-item>
-                    <q-item clickable :to="{ name: 'dataTransactionsUser' }">
+                    <q-item
+                      clickable
+                      :to="{ name: 'dataTransactionsUser' }"
+                      :exact-active-class="`${
+                        Dark.isActive ? 'text-secondary' : 'text-primary'
+                      }`"
+                    >
                       <q-item-section avatar>
                         <q-icon name="receipt" />
                       </q-item-section>

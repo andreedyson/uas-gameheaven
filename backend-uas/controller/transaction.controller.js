@@ -6,8 +6,6 @@ exports.insert = async (req, res) => {
     const { username, productId, quantity, date, status } = req.body;
     let total = 0;
 
-    console.log(productId);
-
     const user = await prisma.users.findUnique({
       where: {
         username: username,
@@ -144,7 +142,6 @@ exports.getById = async (req, res) => {
 
 exports.getByUserId = async (req, res) => {
   try {
-    console.log(req.body.username);
     const data = await prisma.transactions.findMany({
       where: {
         username: req.params.username,
@@ -233,8 +230,8 @@ exports.edit = async (req, res) => {
     // Check if old quantity is the same as the new quantity
     const qtyDifference = newQty - transaction.quantity;
 
+    // Quantity changed, update product stocks
     if (qtyDifference !== 0) {
-      // Quantity changed, update product stocks
       await prisma.products.update({
         where: {
           id_product: Number(productId),
@@ -244,6 +241,30 @@ exports.edit = async (req, res) => {
             qtyDifference > 0
               ? { decrement: qtyDifference }
               : { increment: -qtyDifference },
+        },
+      });
+    }
+
+    // If status changed from 'cancelled' to something else, decrease product stocks
+    if (transaction.status === "cancelled" && status !== "cancelled") {
+      await prisma.products.update({
+        where: {
+          id_product: Number(productId),
+        },
+        data: {
+          stocks: { decrement: transaction.quantity },
+        },
+      });
+    }
+
+    // If status changed to 'cancelled', increment product stocks
+    if (status === "cancelled" && transaction.status !== "cancelled") {
+      await prisma.products.update({
+        where: {
+          id_product: Number(productId),
+        },
+        data: {
+          stocks: { increment: transaction.quantity },
         },
       });
     }
@@ -341,7 +362,6 @@ exports.highest = async (req, res) => {
       results: data,
     });
   } catch (error) {
-    console.log(error);
     return res.json({
       status: false,
       msg: "Something went wrong getting Transaction",
