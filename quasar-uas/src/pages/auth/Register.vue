@@ -28,6 +28,7 @@
                       v-model="form.username"
                       type="text"
                       label="Username"
+                      color="secondary"
                       :rules="[
                         (val) => val !== '' || 'Please enter a username',
                         (val) =>
@@ -39,6 +40,7 @@
                       v-model="form.full_name"
                       type="text"
                       label="Nama Lengkap"
+                      color="secondary"
                       :rules="[
                         (val) => val !== '' || 'Please enter your full name',
                       ]"
@@ -47,6 +49,7 @@
                       v-model="form.email"
                       type="text"
                       label="Email"
+                      color="secondary"
                       :rules="[(val) => val !== '' || 'Please enter an email']"
                     />
                     <q-input
@@ -61,11 +64,11 @@
                       v-model="form.password"
                       :type="showPassword ? 'text' : 'password'"
                       label="Password"
+                      color="secondary"
                       :rules="[
                         (val) => val !== '' || 'Please enter a password',
                       ]"
                     >
-                      >
                       <template v-slot:append>
                         <q-icon
                           @click="togglePassword"
@@ -83,7 +86,7 @@
                       class="w-full mt-6"
                     />
                     <div
-                      :class="`text-center w-full font-semibold duration-200   ${
+                      :class="`text-center w-full font-semibold duration-200  ${
                         Dark.isActive
                           ? 'text-gray-200 hover:text-white'
                           : 'text-gray-500 hover:text-black'
@@ -127,8 +130,6 @@ const form = ref({
 
 const onSubmit = async () => {
   try {
-    btnStatus.value = true;
-
     const res = await api.post("/users/register", {
       ...form.value,
     });
@@ -151,7 +152,10 @@ const onSubmit = async () => {
       });
     }
   } catch (error) {
-    console.log(error);
+    q.notify({
+      message: error,
+      color: "negative",
+    });
   }
 };
 

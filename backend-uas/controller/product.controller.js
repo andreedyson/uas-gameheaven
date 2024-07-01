@@ -23,7 +23,6 @@ exports.insert = async (req, res) => {
       msg: "Product added successfully",
     });
   } catch (error) {
-    console.log(error);
     return res.json({
       status: false,
       msg: "Something went wrong creating Product",
@@ -85,8 +84,22 @@ exports.edit = async (req, res) => {
     const { name, category, brand, price, description, stocks } = req.body;
     let image;
 
+    const product = await prisma.products.findUnique({
+      where: {
+        id_product: Number(req.params.id),
+      },
+    });
+
     if (req.file) {
+      deleteImage(product.image);
       image = req.file.filename;
+    }
+
+    if (!product) {
+      return res.json({
+        status: false,
+        msg: "Product Not Found",
+      });
     }
 
     await prisma.products.update({

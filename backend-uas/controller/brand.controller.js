@@ -102,7 +102,6 @@ exports.deleteBrand = async (req, res) => {
         msg: "Cannot delete brand. It is referenced in another table.",
       });
     } else {
-      console.log(error);
       return res.json({
         status: false,
         msg: "Error deleting brand data",

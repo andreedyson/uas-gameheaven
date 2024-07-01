@@ -83,6 +83,7 @@
                   <q-input
                     v-model="name"
                     label="category Name"
+                    color="secondary"
                     :rules="[
                       (val) => val !== '' || 'category name can not be empty',
                     ]"
@@ -237,7 +238,6 @@ const onSubmit = async () => {
       }
     }
   } catch (error) {
-    console.log(error);
     Notify.create({
       message: "Something went wrong",
       color: "negative",

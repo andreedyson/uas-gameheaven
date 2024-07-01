@@ -200,7 +200,7 @@
             }`"
           >
             <router-link
-              :to="{ name: 'dataProductsAdmin' }"
+              :to="{ name: 'dataTransactionsAdmin' }"
               class="w-full px-4 flex items-center duration-200 hover:text-slate-500"
             >
               <div class="flex items-center justify-between w-full">

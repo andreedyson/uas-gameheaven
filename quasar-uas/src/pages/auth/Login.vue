@@ -31,6 +31,7 @@
                       v-model="username"
                       type="text"
                       label="Username"
+                      color="secondary"
                       :rules="[
                         (val) => val !== '' || 'Please enter a username',
                         (val) =>
@@ -42,6 +43,7 @@
                       v-model="password"
                       :type="showPassword ? 'text' : 'password'"
                       label="Password"
+                      color="secondary"
                       :rules="[
                         (val) => val !== '' || 'Please enter a password',
                       ]"
@@ -135,7 +137,10 @@ const onLogin = async () => {
       });
     }
   } catch (error) {
-    console.log(error);
+    q.notify({
+      message: error,
+      color: "negative",
+    });
   }
 };
 

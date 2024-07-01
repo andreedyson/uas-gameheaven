@@ -38,6 +38,11 @@ const routes = [
         name: "dataCategoriesUser",
         component: () => import("pages/user/categories/Index.vue"),
       },
+      {
+        path: "user/products",
+        name: "dataProductsUser",
+        component: () => import("pages/user/products/Index.vue"),
+      },
     ],
   },
   {

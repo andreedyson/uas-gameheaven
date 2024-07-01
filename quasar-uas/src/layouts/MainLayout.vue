@@ -1,6 +1,6 @@
 <template>
   <q-layout view="lHh Lpr lFf">
-    <q-header unelevated class="py-2 px-4 md:px-10 bg-accent">
+    <q-header unelevated class="py-2 px-6 md:px-12 lg:px-24 bg-accent">
       <q-toolbar class="justify-between">
         <router-link
           :to="{ name: 'dashboardUser' }"
@@ -34,7 +34,7 @@
               <div class="p-3 w-[240px]">
                 <div>
                   <p class="font-semibold">{{ cookiesData.email }}</p>
-                  <p class="text-gray-400">{{ cookiesData.username }}</p>
+                  <p class="text-gray-400">{{ cookiesData.full_name }}</p>
                 </div>
 
                 <q-separator class="my-4" />
@@ -87,41 +87,30 @@
     <!-- Sidebar Section -->
     <div>
       <q-drawer v-model="rightDrawerOpen" show-if-below bordered side="right">
-        <q-list>
-          <q-item clickable class="font-medium">
+        <q-list class="mt-8">
+          <q-item clickable class="font-medium" @click="toggleRightDrawer">
             <q-item-section>
-              <q-item-label>Dashboard</q-item-label>
+              <a href="#home">Home</a>
             </q-item-section>
           </q-item>
-          <q-item clickable class="font-medium">
+          <q-item clickable class="font-medium" @click="toggleRightDrawer">
             <q-item-section>
-              <q-item-label>Transactions</q-item-label>
+              <a href="#category">Category</a>
             </q-item-section>
           </q-item>
-          <q-item clickable class="font-medium">
+          <q-item clickable class="font-medium" @click="toggleRightDrawer">
             <q-item-section>
-              <q-item-label>Products</q-item-label>
+              <a href="#top">Top Products</a>
             </q-item-section>
           </q-item>
-          <q-item
-            clickable
-            class="font-medium"
-            exact-active-class="`${
-              Dark.isActive ? 'text-secondary' : 'text-primary'
-            }`"
-          >
+          <q-item clickable class="font-medium" @click="toggleRightDrawer">
             <q-item-section>
-              <q-item-label>Brands</q-item-label>
+              <a href="#about">About Us</a>
             </q-item-section>
           </q-item>
-          <q-item clickable class="font-medium">
+          <q-item clickable class="font-medium" @click="toggleRightDrawer">
             <q-item-section>
-              <q-item-label>Categories</q-item-label>
-            </q-item-section>
-          </q-item>
-          <q-item clickable class="font-medium">
-            <q-item-section>
-              <q-item-label>Users</q-item-label>
+              <a href="#contact">Contact Us</a>
             </q-item-section>
           </q-item>
         </q-list>
@@ -154,9 +143,8 @@ const toggleDarkMode = () => {
 };
 
 onMounted(() => {
-  const savedTheme = localStorage.getItem("theme");
-  if (savedTheme) {
-    Dark.set(savedTheme === "dark");
+  if (localStorage.getItem("theme") === "dark") {
+    Dark.set(true);
   } else {
     Dark.set(false);
   }

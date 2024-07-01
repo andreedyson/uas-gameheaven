@@ -33,31 +33,17 @@
               <div class="p-3 w-[240px]">
                 <div>
                   <p class="font-semibold">{{ cookiesData.email }}</p>
-                  <p class="text-gray-400">{{ cookiesData.username }}</p>
+                  <p class="text-gray-400">{{ cookiesData.full_name }}</p>
+                </div>
+
+                <div class="flex justify-between items-center mt-4">
+                  <p>Role</p>
+                  <p class="font-bold text-red-500">Admin</p>
                 </div>
 
                 <q-separator class="my-4" />
 
                 <div>
-                  <q-list>
-                    <q-item clickable>
-                      <q-item-section avatar>
-                        <q-icon name="person" />
-                      </q-item-section>
-                      <q-item-section>
-                        <p>Account</p>
-                      </q-item-section>
-                    </q-item>
-                    <q-item clickable>
-                      <q-item-section avatar>
-                        <q-icon name="settings" />
-                      </q-item-section>
-                      <q-item-section>
-                        <p>Settings</p>
-                      </q-item-section>
-                    </q-item>
-                  </q-list>
-
                   <q-btn
                     @click="logout"
                     class="w-full mt-3 font-bold"
@@ -134,21 +120,6 @@
         </q-item>
         <q-item
           clickable
-          :to="{ name: 'dataBrandsAdmin' }"
-          class="font-medium"
-          :exact-active-class="`${
-            Dark.isActive ? 'text-secondary' : 'text-primary'
-          }`"
-        >
-          <q-item-section avatar>
-            <q-icon name="branding_watermark" />
-          </q-item-section>
-          <q-item-section>
-            <q-item-label>Brands</q-item-label>
-          </q-item-section>
-        </q-item>
-        <q-item
-          clickable
           :to="{ name: 'dataCategoriesAdmin' }"
           class="font-medium"
           :exact-active-class="`${
@@ -160,6 +131,21 @@
           </q-item-section>
           <q-item-section>
             <q-item-label>Categories</q-item-label>
+          </q-item-section>
+        </q-item>
+        <q-item
+          clickable
+          :to="{ name: 'dataBrandsAdmin' }"
+          class="font-medium"
+          :exact-active-class="`${
+            Dark.isActive ? 'text-secondary' : 'text-primary'
+          }`"
+        >
+          <q-item-section avatar>
+            <q-icon name="branding_watermark" />
+          </q-item-section>
+          <q-item-section>
+            <q-item-label>Brands</q-item-label>
           </q-item-section>
         </q-item>
       </q-list>

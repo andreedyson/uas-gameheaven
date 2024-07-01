@@ -80,7 +80,8 @@
                 <q-form @submit="onSubmit" ref="formInput">
                   <q-input
                     v-model="form.id_brand"
-                    label="brand ID"
+                    label="Brand ID"
+                    color="secondary"
                     :rules="[
                       (val) => val !== '' || 'Brand ID can not be empty',
                       (val) =>
@@ -91,6 +92,7 @@
                   <q-input
                     v-model="form.name"
                     label="Brand Name"
+                    color="secondary"
                     :rules="[
                       (val) => val !== '' || 'Brand name can not be empty',
                     ]"

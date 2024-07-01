@@ -28,7 +28,6 @@ exports.register = async (req, res) => {
       });
     } else {
       const salt = bcrypt.genSaltSync(10);
-      x;
       const hashedPassword = bcrypt.hashSync(password, salt);
       password = hashedPassword;
 
@@ -48,7 +47,10 @@ exports.register = async (req, res) => {
       });
     }
   } catch (error) {
-    console.log(error);
+    return res.json({
+      status: false,
+      msg: "Registration Failed",
+    });
   }
 };
 
@@ -73,14 +75,13 @@ exports.login = async (req, res) => {
         userExist.password
       );
 
-      console.log(isPasswordCorrect);
-
       if (isPasswordCorrect) {
         const data = {
           username: userExist.username,
           full_name: userExist.full_name,
           email: userExist.email,
           role: userExist.role,
+          phone: userExist.phone,
         };
 
         return res.json({

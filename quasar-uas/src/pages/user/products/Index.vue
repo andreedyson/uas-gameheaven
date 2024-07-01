@@ -7,7 +7,7 @@
           class="mb-5 flex items-center gap-2 cursor-pointer duration-200 hover:text-slate-400"
         >
           <q-icon name="arrow_back" size="md" />
-          <h2 class="text-xl font-bold">{{ categoryName }} Products</h2>
+          <h2 class="text-xl font-bold">All Products</h2>
         </div>
 
         <div
@@ -137,7 +137,6 @@ import { useRoute, useRouter } from "vue-router";
 const router = useRouter();
 const route = useRoute();
 
-const categoryName = ref("");
 const transactionDialog = ref(false);
 const transactionForm = ref();
 const activeData = ref(null);
@@ -150,12 +149,10 @@ onMounted(() => getProductsData());
 
 const getProductsData = async () => {
   try {
-    const category = await api.get(`/category/get/${route.params.id}`);
-    const res = await api.get(`/product/get-category/${route.params.id}`);
+    const res = await api.get("/product/get");
 
     if (res.data.status) {
       productData.value = res.data.results;
-      categoryName.value = category.data.results.name;
     }
   } catch (error) {
     Notify.create({

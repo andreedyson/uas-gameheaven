@@ -3,7 +3,7 @@
     <!-- Home Section -->
     <section id="home">
       <div
-        class="px-6 grid grid-cols-1 gap-6 place-content-center place-items-center h-[90vh] md:px-12 lg:grid-cols-2"
+        class="px-6 grid grid-cols-1 gap-6 place-content-center place-items-center h-[90vh] md:px-12 lg:px-28 lg:grid-cols-2"
       >
         <div
           class="h-full w-full flex flex-col max-lg:justify-center max-lg:items-center max-lg:text-center"
@@ -32,12 +32,13 @@
           </div>
           <div class="mt-8">
             <q-btn
+              :to="{ name: 'dataProductsUser' }"
               unelevated
               no-caps
               class="bg-primary px-6 py-3 text-base text-white"
             >
               <q-icon name="shopping_cart" class="mr-2" />
-              shop Now
+              Shop Now
             </q-btn>
           </div>
         </div>
@@ -52,7 +53,7 @@
     <!-- Category Section -->
     <section
       id="category"
-      class="px-6 py-[80px] bg-[#03052f] text-white md:px-12"
+      class="px-6 py-[80px] bg-[#03052f] text-white md:px-12 lg:px-28"
     >
       <div class="space-y-8">
         <div>
@@ -80,13 +81,15 @@
     </section>
 
     <!-- Top Products Section -->
-    <section id="top" class="px-6 py-[120px] md:px-12">
+    <section id="top" class="px-6 py-[120px] md:px-12 lg:px-28">
       <div class="space-y-8">
         <div>
           <h1 class="text-4xl font-bold text-center">Top Products</h1>
         </div>
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          <div v-for="(product, i) in productData.slice(0, 4)" :key="i">
+        <div
+          class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4 md:gap-y-8"
+        >
+          <div v-for="(product, i) in productData.slice(0, 8)" :key="i">
             <q-card
               :class="`${
                 Dark.isActive ? 'bg-dark' : 'bg-grey-3'
@@ -185,7 +188,7 @@
     </section>
 
     <!-- Footer Section -->
-    <footer class="px-6 py-20 bg-primary text-white md:px-12">
+    <footer class="px-6 py-20 bg-primary text-white md:px-12 lg:px-28">
       <div class="grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-4">
         <div class="flex flex-col gap-4 md:col-span-2">
           <router-link
@@ -343,7 +346,6 @@ const getCategoriesData = async () => {
       categoriesList.value = res.data.results;
     }
   } catch (error) {
-    console.log(error);
     Notify.create({
       message: "Error getting categories data",
       color: "negative",
@@ -358,7 +360,6 @@ const getBrandsData = async () => {
       brandsList.value = res.data.results;
     }
   } catch (error) {
-    console.log(error);
     Notify.create({
       message: "Error getting brands data",
       color: "negative",
@@ -373,7 +374,6 @@ const openDialog = (data) => {
 
 const onSubmit = async () => {
   try {
-    console.log(activeData.value.id_product);
     const res = await api.post("/transaction/insert", {
       username: getProfile().username,
       productId: Number(activeData.value.id_product),

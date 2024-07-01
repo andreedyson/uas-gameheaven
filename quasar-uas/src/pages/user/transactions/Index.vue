@@ -53,7 +53,7 @@
             </template>
             <template v-slot:top-left>
               <h2 class="text-xl font-semibold">
-                {{ profile.full_name }} Transactions
+                {{ profile.full_name }}'s Transactions
               </h2>
             </template>
           </q-table>
