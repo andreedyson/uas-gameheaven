@@ -82,7 +82,7 @@
                 <q-form @submit="onSubmit" ref="formInput">
                   <q-input
                     v-model="name"
-                    label="category Name"
+                    label="Category Name"
                     color="secondary"
                     :rules="[
                       (val) => val !== '' || 'category name can not be empty',

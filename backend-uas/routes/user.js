@@ -4,7 +4,6 @@ const {
   login,
   getAll,
   usersCount,
-  edit,
 } = require("../controller/user.controller");
 
 router.post("/register", register);

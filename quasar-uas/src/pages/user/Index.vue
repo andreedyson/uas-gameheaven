@@ -268,7 +268,7 @@
               :rules="[
                 (val) => val > 0 || 'Quantity should be 1 minimum',
                 (val) =>
-                  val < activeData.stocks ||
+                  val >= activeData.stocks ||
                   `Quantity should be less than or equal to ${activeData.stocks} item`,
               ]"
             />

@@ -103,6 +103,7 @@
                   v-model="form.name"
                   type="text"
                   label="Product Name"
+                  color="secondary"
                   outlined
                   required
                   :rules="[
@@ -113,6 +114,7 @@
                   v-model="categorySelected"
                   :options="categoryList"
                   label="Category"
+                  color="secondary"
                   option-value="id_category"
                   option-label="name"
                   outlined
@@ -123,6 +125,7 @@
                   v-model="brandSelected"
                   :options="brandList"
                   label="Brand"
+                  color="secondary"
                   option-value="id_brand"
                   option-label="name"
                   outlined
@@ -132,6 +135,7 @@
                 <q-input
                   v-model="form.price"
                   type="number"
+                  color="secondary"
                   label="Price (Rp.)"
                   outlined
                   required

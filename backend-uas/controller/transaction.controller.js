@@ -224,6 +224,7 @@ exports.edit = async (req, res) => {
         msg: `You can only add ${product.stocks} quantity to the transaction`,
       });
     }
+    // TODO: Update stocks if the product is changed
 
     total = product.price * newQty;
 
