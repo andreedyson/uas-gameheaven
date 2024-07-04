@@ -217,7 +217,7 @@
                     {{ high.products.name }}
                   </h3>
                 </div>
-                <div side>
+                <div class="text-center">
                   <div>{{ dateFormat(high.date) }}</div>
                   <div
                     v-bind:class="`text-base ${
@@ -456,7 +456,7 @@ const onSubmit = async () => {
   }
 };
 
-const getOverviewCount = async (req, res) => {
+const getOverviewCount = async () => {
   try {
     const usersResponse = await api.get("/users/total-users");
     const productsResponse = await api.get("/product/total-products");

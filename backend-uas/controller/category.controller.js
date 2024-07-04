@@ -25,11 +25,7 @@ exports.insert = async (req, res) => {
 
 exports.getData = async (req, res) => {
   try {
-    const data = await prisma.categories.findMany({
-      orderBy: {
-        name: "asc",
-      },
-    });
+    const data = await prisma.categories.findMany({});
 
     return res.json({
       status: true,

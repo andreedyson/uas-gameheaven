@@ -82,6 +82,7 @@
                     v-model="form.id_brand"
                     label="Brand ID"
                     color="secondary"
+                    :readonly="editMode"
                     :rules="[
                       (val) => val !== '' || 'Brand ID can not be empty',
                       (val) =>

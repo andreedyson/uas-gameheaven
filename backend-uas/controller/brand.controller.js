@@ -73,6 +73,7 @@ exports.edit = async (req, res) => {
       msg: "Brand edited successfully",
     });
   } catch (error) {
+    console.log(error);
     return res.json({
       status: false,
       msg: "Something went wrong editing Brand",

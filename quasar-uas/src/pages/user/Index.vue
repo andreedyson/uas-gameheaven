@@ -258,6 +258,10 @@
             <p>Stocks</p>
             <p class="font-semibold">{{ activeData.stocks }} Pc(s) left</p>
           </div>
+          <div class="flex justify-between items-center">
+            <p>Price</p>
+            <p class="font-semibold">{{ formatPrice(activeData.price) }}</p>
+          </div>
           <q-form ref="transactionForm" @submit="onSubmit">
             <q-input
               v-if="activeData.stocks > 0"
@@ -268,7 +272,7 @@
               :rules="[
                 (val) => val > 0 || 'Quantity should be 1 minimum',
                 (val) =>
-                  val >= activeData.stocks ||
+                  val <= activeData.stocks ||
                   `Quantity should be less than or equal to ${activeData.stocks} item`,
               ]"
             />
@@ -381,6 +385,10 @@ const onSubmit = async () => {
       total: quantity.value * activeData.value.price,
       date: new Date(),
     });
+
+    getProductsData();
+    getCategoriesData();
+    getBrandsData();
 
     if (res.data.status) {
       Notify.create({

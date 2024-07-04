@@ -75,6 +75,7 @@ exports.insert = async (req, res) => {
       msg: "Transaction added successfully",
     });
   } catch (error) {
+    console.log(error);
     return res.json({
       status: false,
       msg: "Something went wrong creating Transaction",
@@ -224,7 +225,6 @@ exports.edit = async (req, res) => {
         msg: `You can only add ${product.stocks} quantity to the transaction`,
       });
     }
-    // TODO: Update stocks if the product is changed
 
     total = product.price * newQty;
 
@@ -246,7 +246,7 @@ exports.edit = async (req, res) => {
       });
     }
 
-    // If status changed from 'cancelled' to something else, decrease product stocks
+    // Kalau status berubah dari "Cancelled" ke yang lain, kurangi stok produk
     if (transaction.status === "cancelled" && status !== "cancelled") {
       await prisma.products.update({
         where: {
@@ -258,7 +258,7 @@ exports.edit = async (req, res) => {
       });
     }
 
-    // If status changed to 'cancelled', increment product stocks
+    // Kalau status berubah menjadi 'Cancelled', Kembalikan Stok Produk
     if (status === "cancelled" && transaction.status !== "cancelled") {
       await prisma.products.update({
         where: {
