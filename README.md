@@ -10,6 +10,10 @@ Project akhir mata kuliah Pemrograman 3 Semester 4 Sistem Informasi Universitas 
 - `npm i`  to install all the dependencies on the frontend
 - `nodemon` to run the Express backend server
 - `quasar dev` to run the Quasar Application
+
+### Fitur
+- Dashboard User
+- Dashboard Admin
   
 ```bash
   npm i
