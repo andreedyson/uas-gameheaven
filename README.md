@@ -11,7 +11,7 @@ Project akhir mata kuliah Pemrograman 3 Semester 4 Sistem Informasi Universitas 
 - `nodemon` to run the Express backend server
 - `quasar dev` to run the Quasar Application
 
-### Fitur
+### Features
 - Dashboard User
 - Dashboard Admin
   
