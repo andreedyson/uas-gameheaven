@@ -31,11 +31,11 @@ exports.insert = async (req, res) => {
       msg: "Brand added successfully",
     });
   } catch (error) {
-    console.log(error);
+    console.log(error.message);
     return res.json({
       status: false,
       msg: "Something went wrong creating Brand",
-      error: error,
+      error: error.message,
     });
   }
 };
