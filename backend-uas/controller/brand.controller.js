@@ -3,7 +3,7 @@ const prisma = new PrismaClient();
 
 exports.insert = async (req, res) => {
   try {
-    const { id_brand, name } = req.body;
+    const { id_brand, name, keterangan } = req.body;
 
     const brandExist = await prisma.brands.findUnique({
       where: {
@@ -22,6 +22,7 @@ exports.insert = async (req, res) => {
       data: {
         id_brand: id_brand.toUpperCase(),
         name: name,
+        keterangan: keterangan,
       },
     });
 
@@ -58,10 +59,11 @@ exports.getData = async (req, res) => {
 
 exports.edit = async (req, res) => {
   try {
-    const { id_brand, name } = req.body;
+    const { id_brand, name, keterangan } = req.body;
     await prisma.brands.update({
       data: {
         name: name,
+        keterangan: keterangan,
       },
       where: {
         id_brand: id_brand,

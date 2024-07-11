@@ -46,6 +46,7 @@ exports.getAll = async (req, res) => {
       results: data,
     });
   } catch (error) {
+    console.log(error);
     return res.json({
       status: false,
       msg: "Something went wrong getting Product",

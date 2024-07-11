@@ -8,9 +8,10 @@ datasource db {
 }
 
 model brands {
-  id_brand String     @id @db.Char(4)
-  name     String     @db.VarChar(50)
-  products products[]
+  id_brand   String     @id @db.Char(4)
+  name       String     @db.VarChar(50)
+  keterangan String     @db.Text
+  products   products[]
 }
 
 model categories {

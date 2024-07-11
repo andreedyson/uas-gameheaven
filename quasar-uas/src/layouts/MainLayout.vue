@@ -9,7 +9,7 @@
           GameHeaven
         </router-link>
 
-        <div class="flex justify-center items-center gap-8 max-md:hidden">
+        <div class="flex justify-center items-center gap-8 max-lg:hidden">
           <a href="#home">Home</a>
           <a href="#category">Category</a>
           <a href="#top">Top Products</a>
@@ -17,7 +17,7 @@
           <a href="#contact">Contact Us</a>
         </div>
 
-        <div class="max-md:hidden">
+        <div class="max-lg:hidden">
           <q-btn
             round
             flat
@@ -78,7 +78,7 @@
           round
           icon="menu"
           aria-label="Menu"
-          class="md:hidden"
+          class="lg:hidden"
           @click="toggleRightDrawer"
         />
       </q-toolbar>
@@ -111,6 +111,21 @@
           <q-item clickable class="font-medium" @click="toggleRightDrawer">
             <q-item-section>
               <a href="#contact">Contact Us</a>
+            </q-item-section>
+          </q-item>
+          <q-item clickable class="font-medium" @click="toggleRightDrawer">
+            <q-item-section>
+              <div>
+                <q-btn
+                  @click="logout"
+                  class="w-full mt-3 font-bold"
+                  color="negative"
+                  icon="logout"
+                  label="Logout"
+                  size="md"
+                  v-close-popup
+                />
+              </div>
             </q-item-section>
           </q-item>
         </q-list>

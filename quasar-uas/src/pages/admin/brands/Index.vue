@@ -31,6 +31,9 @@
                 <q-td key="name" :props="props">
                   {{ props.row.name }}
                 </q-td>
+                <q-td key="keterangan" :props="props">
+                  {{ props.row.keterangan }}
+                </q-td>
                 <q-td key="action" :props="props">
                   <div class="flex gap-2">
                     <q-btn
@@ -98,6 +101,18 @@
                       (val) => val !== '' || 'Brand name can not be empty',
                     ]"
                   />
+                  <q-input
+                    v-model="form.keterangan"
+                    label="Description"
+                    type="textarea"
+                    rows="4"
+                    :rules="[
+                      (val) => val !== '' || 'Keterangan can not be empty',
+                    ]"
+                    required
+                    outlined
+                    dense
+                  />
                 </q-form>
               </q-card-section>
 
@@ -151,6 +166,13 @@ const columns = [
     sortable: true,
   },
   {
+    name: "keterangan",
+    align: "left",
+    label: "Keterangan",
+    field: "keterangan",
+    sortable: true,
+  },
+  {
     name: "action",
     align: "left",
     label: "Action",
@@ -163,6 +185,7 @@ const formDialog = ref(false);
 const form = ref({
   id_brand: "",
   name: "",
+  keterangan: ""
 });
 
 const rows = ref([]);
@@ -234,6 +257,7 @@ const onSubmit = async () => {
       const res = await api.put("/brand/edit", {
         id_brand: form.value.id_brand,
         name: form.value.name,
+        keterangan: form.value.keterangan
       });
 
       if (res.data.status) {
