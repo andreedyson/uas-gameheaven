@@ -7,7 +7,7 @@ import axios from "axios";
 // good idea to move this instance creation inside of the
 // "export default () => {}" function below (which runs individually
 // for each client)
-export const baseURL = process.env.BASE_URL || "http://localhost:3000";
+export const baseURL = process.env.BASE_URL;
 
 const api = axios.create({ baseURL });
 
