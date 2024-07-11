@@ -4,7 +4,8 @@
   "description": "Project UAS Pemrograman 3 Andre Edyson",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "postinstall": "prisma generate"
   },
   "author": "Andre Edyson",
   "license": "ISC",
