@@ -31,6 +31,7 @@ exports.insert = async (req, res) => {
       msg: "Brand added successfully",
     });
   } catch (error) {
+    console.log(error);
     return res.json({
       status: false,
       msg: "Something went wrong creating Brand",
